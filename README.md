@@ -64,7 +64,7 @@ ComfyUI-Workflow-Video-Quality-Control/
 Depending on which workflow version you run, ensure the relevant custom nodes are installed:
 
 ### For V01 & V02:
-- **ComfyUI-LoadVideoAdvanced:** Video ingestion and frame pre-processing.
+- **[ComfyUI-LoadVideoAdvanced](https://github.com/harsh-shrivas/ComfyUI-LoadVideoAdvanced):** Video ingestion and frame pre-processing.
 - **ComfyUI-Florence2:** Florence-2 model loader and OCR runner (`Florence2ModelLoader`, `Florence2Run`).
 - **ComfyUI-WhisperX:** Audio transcription and word-level alignment (`Apply WhisperX`).
 - **ComfyUI-Gemini:** Google Gemini API multimodal integration (`GeminiAPI`).
