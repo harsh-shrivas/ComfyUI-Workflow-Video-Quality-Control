@@ -1,0 +1,544 @@
+{
+  "id": "ec2d6bf9-588f-4e37-a0c7-1e5e51e9a18b",
+  "revision": 0,
+  "last_node_id": 67,
+  "last_link_id": 94,
+  "nodes": [
+    {
+      "id": 27,
+      "type": "Florence2ModelLoader",
+      "pos": [
+        2870.468926497498,
+        -93.89681315764975
+      ],
+      "size": [
+        295.484375,
+        106
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "lora",
+          "shape": 7,
+          "type": "PEFTLORA",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "florence2_model",
+          "type": "FL2MODEL",
+          "links": [
+            39
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Florence2ModelLoader"
+      },
+      "widgets_values": [
+        "Florence-2-large-ft",
+        "fp16",
+        false
+      ],
+      "widgets_values_named": {
+        "model": "Florence-2-large-ft",
+        "precision": "fp16",
+        "convert_to_safetensors": false
+      }
+    },
+    {
+      "id": 26,
+      "type": "Florence2Run",
+      "pos": [
+        3215.463447975813,
+        -275.60022864843273
+      ],
+      "size": [
+        400,
+        364
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 38
+        },
+        {
+          "name": "florence2_model",
+          "type": "FL2MODEL",
+          "link": 39
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "caption",
+          "type": "STRING",
+          "links": [
+            42
+          ]
+        },
+        {
+          "name": "data",
+          "type": "JSON",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Florence2Run"
+      },
+      "widgets_values": [
+        "",
+        "ocr",
+        true,
+        false,
+        1024,
+        3,
+        true,
+        "",
+        275691642743745,
+        "randomize"
+      ],
+      "widgets_values_named": {
+        "text_input": "",
+        "task": "ocr",
+        "fill_mask": true,
+        "keep_model_loaded": false,
+        "max_new_tokens": 1024,
+        "num_beams": 3,
+        "do_sample": true,
+        "output_mask_select": "",
+        "seed": 275691642743745,
+        "control_after_generate": "randomize"
+      }
+    },
+    {
+      "id": 25,
+      "type": "Apply WhisperX",
+      "pos": [
+        3271.6228329395344,
+        164.14843987072905
+      ],
+      "size": [
+        270,
+        190
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 37
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            43
+          ]
+        },
+        {
+          "name": "segments_alignment",
+          "type": "whisper_alignment",
+          "links": null
+        },
+        {
+          "name": "words_alignment",
+          "type": "whisper_alignment",
+          "links": null
+        },
+        {
+          "name": "translate_alignment",
+          "type": "whisper_alignment",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Apply WhisperX"
+      },
+      "widgets_values": [
+        "base",
+        true,
+        "google",
+        "en"
+      ],
+      "widgets_values_named": {
+        "model": "base",
+        "if_translate": true,
+        "translator": "google",
+        "to_language": "en"
+      }
+    },
+    {
+      "id": 19,
+      "type": "LoadVideoAdvanced",
+      "pos": [
+        2268.1524940016616,
+        -90.43609025483865
+      ],
+      "size": [
+        353.2876953125,
+        326
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            38
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            37
+          ]
+        },
+        {
+          "name": "video_info",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "video_meta_text",
+          "type": "STRING",
+          "links": [
+            47
+          ]
+        },
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideoAdvanced"
+      },
+      "widgets_values": [
+        "Path\\To\\Input_Video.mov",
+        0,
+        856,
+        480,
+        0,
+        0,
+        20,
+        true
+      ],
+      "widgets_values_named": {
+        "video_path": "Path\\To\\Input_Video.mov",
+        "frame_start": 0,
+        "frame_count": 856,
+        "target_width": 480,
+        "target_height": 0,
+        "crop_padding": 0,
+        "fps_target": 20,
+        "extract_audio": true
+      }
+    },
+    {
+      "id": 28,
+      "type": "GeminiAPI",
+      "pos": [
+        4338.485021404813,
+        471.2743392230558
+      ],
+      "size": [
+        400,
+        406
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image4",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image5",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "video",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 44
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            45
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GeminiAPI"
+      },
+      "widgets_values": [
+        "What is the meaning of life?",
+        "gemini-3.6-flash",
+        false,
+        false,
+        "Custom",
+        "Return only the prompt text itself. No explanations or formatting.",
+        "raw_text",
+        "YOUR_GEMINI_API_KEY"
+      ],
+      "widgets_values_named": {
+        "prompt": "What is the meaning of life?",
+        "gemini_model": "gemini-3.6-flash",
+        "stream": false,
+        "structure_output": false,
+        "prompt_structure": "Custom",
+        "structure_format": "Return only the prompt text itself. No explanations or formatting.",
+        "output_format": "raw_text",
+        "api_key": "YOUR_GEMINI_API_KEY"
+      }
+    },
+    {
+      "id": 30,
+      "type": "ShowText|pysssss",
+      "pos": [
+        4826.652951678707,
+        473.0647467482123
+      ],
+      "size": [
+        716.2701402757948,
+        726.5803469746204
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 45
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      }
+    },
+    {
+      "id": 29,
+      "type": "StringFormat",
+      "pos": [
+        3766.723646443988,
+        607.590436549438
+      ],
+      "size": [
+        511.2796137335031,
+        360.55131092870863
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "a",
+          "name": "values.a",
+          "shape": 7,
+          "type": "*",
+          "link": 42
+        },
+        {
+          "name": "values.b",
+          "shape": 7,
+          "type": "*",
+          "link": 43
+        },
+        {
+          "name": "values.c",
+          "shape": 7,
+          "type": "*",
+          "link": 47
+        },
+        {
+          "name": "values.d",
+          "shape": 7,
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            44
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringFormat"
+      },
+      "widgets_values": [
+        "ON-SCREEN CAPTIONS EXTRACTED (FROM OCR):\n{a}\n\nSPOKEN AUDIO TRANSCRIPT (FROM WHISPER):\n{b}\n\nMETADATA:\n{c}\n\nINSTRUCTIONS:\nCompare the Spoken Audio Transcript against the On-Screen Captions line by line.\nFlag every single error where the on-screen text does not match what was spoken.\n\nFor each mismatch, output in this format:\n - [Timestamp]\n - Spoken: \"...\"\n - Caption: \"...\"\n - Issue: [Describe missing word, extra word, typo, or substitution]"
+      ],
+      "widgets_values_named": {
+        "f_string": "ON-SCREEN CAPTIONS EXTRACTED (FROM OCR):\n{a}\n\nSPOKEN AUDIO TRANSCRIPT (FROM WHISPER):\n{b}\n\nMETADATA:\n{c}\n\nINSTRUCTIONS:\nCompare the Spoken Audio Transcript against the On-Screen Captions line by line.\nFlag every single error where the on-screen text does not match what was spoken.\n\nFor each mismatch, output in this format:\n - [Timestamp]\n - Spoken: \"...\"\n - Caption: \"...\"\n - Issue: [Describe missing word, extra word, typo, or substitution]"
+      }
+    }
+  ],
+  "links": [
+    [
+      37,
+      19,
+      2,
+      25,
+      0,
+      "AUDIO"
+    ],
+    [
+      38,
+      19,
+      0,
+      26,
+      0,
+      "IMAGE"
+    ],
+    [
+      39,
+      27,
+      0,
+      26,
+      1,
+      "FL2MODEL"
+    ],
+    [
+      42,
+      26,
+      2,
+      29,
+      0,
+      "STRING"
+    ],
+    [
+      43,
+      25,
+      0,
+      29,
+      1,
+      "STRING"
+    ],
+    [
+      44,
+      29,
+      0,
+      28,
+      7,
+      "STRING"
+    ],
+    [
+      45,
+      28,
+      0,
+      30,
+      0,
+      "STRING"
+    ],
+    [
+      47,
+      19,
+      4,
+      29,
+      2,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.2496208548712189,
+      "offset": [
+        -202.13628080886838,
+        1231.695596039851
+      ]
+    },
+    "frontendVersion": "1.52.7",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

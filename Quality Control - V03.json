@@ -1,0 +1,354 @@
+{
+  "id": "5f89aea5-056e-493a-84ee-c3c8656c3862",
+  "revision": 0,
+  "last_node_id": 9,
+  "last_link_id": 7,
+  "nodes": [
+    {
+      "id": 2,
+      "type": "UniversalScriptRunner",
+      "pos": [
+        4270.61863283298,
+        1290.473702519402
+      ],
+      "size": [
+        578.9716448289678,
+        102
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "trigger_signal",
+          "shape": 7,
+          "type": "STRING",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "execution_log",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "trigger_signal",
+          "type": "STRING",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UniversalScriptRunner"
+      },
+      "widgets_values": [
+        "\"C:\\Program Files\\Adobe\\Adobe After Effects <VERSION>\\Support Files\\AfterFX.exe\"",
+        ""
+      ],
+      "widgets_values_named": {
+        "script_path": "\"C:\\Program Files\\Adobe\\Adobe After Effects <VERSION>\\Support Files\\AfterFX.exe\"",
+        "arguments": ""
+      }
+    },
+    {
+      "id": 1,
+      "type": "UniversalScriptRunner",
+      "pos": [
+        3693.3518235108063,
+        1222.508815735358
+      ],
+      "size": [
+        486.38314192855387,
+        102
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "trigger_signal",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "execution_log",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "trigger_signal",
+          "type": "STRING",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UniversalScriptRunner"
+      },
+      "widgets_values": [
+        "\"Path\\To\\after-effects-mcp\\Launch_Claude_Code.bat\"",
+        ""
+      ],
+      "widgets_values_named": {
+        "script_path": "\"Path\\To\\after-effects-mcp\\Launch_Claude_Code.bat\"",
+        "arguments": ""
+      }
+    },
+    {
+      "id": 3,
+      "type": "UniversalAssetReader",
+      "pos": [
+        4437.767131075076,
+        1051.2295528194113
+      ],
+      "size": [
+        400.8397102615668,
+        98
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE_OR_VIDEO",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "TEXT",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "FILE_PATH",
+          "type": "STRING",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UniversalAssetReader"
+      },
+      "widgets_values": [
+        "\"Path\\To\\Input_Video.mp4\""
+      ],
+      "widgets_values_named": {
+        "file_path": "\"Path\\To\\Input_Video.mp4\""
+      }
+    },
+    {
+      "id": 4,
+      "type": "MainBrainNode",
+      "pos": [
+        5025.508448593908,
+        1360.408898515657
+      ],
+      "size": [
+        417.6505515956869,
+        432.02248825257607
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video_path",
+          "shape": 7,
+          "type": "STRING",
+          "link": 2
+        },
+        {
+          "name": "IMAGE_OR_VIDEO",
+          "shape": 7,
+          "type": "IMAGE_OR_VIDEO,VIDEO,IMAGE,STRING",
+          "link": null
+        },
+        {
+          "name": "trigger_signal_1",
+          "shape": 7,
+          "type": "STRING",
+          "link": 3
+        },
+        {
+          "name": "trigger_signal_2",
+          "shape": 7,
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "execution_log",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "trigger_signal",
+          "type": "STRING",
+          "links": [
+            6
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MainBrainNode"
+      },
+      "widgets_values": [
+        "You are performing a visual OCR and transcript QA audit on the video layer in After Effects.\n\nWORKFLOW STEPS:\n1. Query After Effects via ExtendScript to inspect composition duration and frame rate.\n2. Sample video frames every 30 to 60 frames using $.grabCurrentFrameSnapshot(frameNumber).\n3. Compare on-screen burned-in text against the spoken audio transcript.\n4. FOR EVERY ERROR FOUND:\n   - Call $.addQAMarker(frameNumber, \"Current: <wrong_text>\\nCorrect: <right_text>\") to attach a marker to the QA_Error_Markers layer.\n   - Call $.jumpToFrame(frameNumber) to snap the playhead directly to that frame.\n5. Run $.exportQAMarkersToText() once all frames are audited.\n\nSTRICT MARKER FORMAT REQUIREMENT:\nDo NOT include issue descriptions, explanations, frame numbers, or extra timestamp lines in the marker comment payload. Keep it strictly to these two lines:\n\nCurrent: <exact wrong text>\nCorrect: <corrected text>"
+      ],
+      "widgets_values_named": {
+        "prompt_instructions": "You are performing a visual OCR and transcript QA audit on the video layer in After Effects.\n\nWORKFLOW STEPS:\n1. Query After Effects via ExtendScript to inspect composition duration and frame rate.\n2. Sample video frames every 30 to 60 frames using $.grabCurrentFrameSnapshot(frameNumber).\n3. Compare on-screen burned-in text against the spoken audio transcript.\n4. FOR EVERY ERROR FOUND:\n   - Call $.addQAMarker(frameNumber, \"Current: <wrong_text>\\nCorrect: <right_text>\") to attach a marker to the QA_Error_Markers layer.\n   - Call $.jumpToFrame(frameNumber) to snap the playhead directly to that frame.\n5. Run $.exportQAMarkersToText() once all frames are audited.\n\nSTRICT MARKER FORMAT REQUIREMENT:\nDo NOT include issue descriptions, explanations, frame numbers, or extra timestamp lines in the marker comment payload. Keep it strictly to these two lines:\n\nCurrent: <exact wrong text>\nCorrect: <corrected text>"
+      }
+    },
+    {
+      "id": 8,
+      "type": "AEMarkerReaderNode",
+      "pos": [
+        5628.873481798356,
+        1558.6406891877352
+      ],
+      "size": [
+        300.68515625,
+        106
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "trigger_signal",
+          "type": "STRING",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "qa_report_text",
+          "type": "STRING",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AEMarkerReaderNode"
+      },
+      "widgets_values": [
+        "QA_Error_Markers",
+        "Path\\To\\Temp\\ae_qa_report.txt",
+        "C:\\Program Files\\Adobe\\Adobe After Effects <VERSION>\\Support Files\\afterfx.exe"
+      ],
+      "widgets_values_named": {
+        "marker_layer_name": "QA_Error_Markers",
+        "report_file_path": "Path\\To\\Temp\\ae_qa_report.txt",
+        "ae_install_path": "C:\\Program Files\\Adobe\\Adobe After Effects <VERSION>\\Support Files\\afterfx.exe"
+      }
+    },
+    {
+      "id": 9,
+      "type": "ShowText|pysssss",
+      "pos": [
+        6138.570492500187,
+        1651.4740800151571
+      ],
+      "size": [
+        416.17933771158096,
+        598.0857709739882
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "#1 [00.01.00]\nCurrent: 4 thing to shrink your pore to size '0'\nCorrect: 4 things to shrink your pores to size '0'\n------------------------------------------\n#2 [00.11.21]\nCurrent: [no caption]\nCorrect: Number 1, gentle but round-the-clock\n------------------------------------------\n#3 [00.22.09]\nCurrent: [no caption]\nCorrect: Number 2, excess oil regulation.\n------------------------------------------\n#4 [00.30.27]\nCurrent: [no caption]\nCorrect: Number 3, improving skin barrier\n------------------------------------------\n#5 [00.37.27]\nCurrent: but balances skin\nCorrect: but balanced skin\n------------------------------------------\n#6 [00.41.21]\nCurrent: pore looking tight.\nCorrect: pores looking tight.\n------------------------------------------\n#7 [00.43.15]\nCurrent: [no caption]\nCorrect: number 4, strengthening collagen.\n------------------------------------------\n#8 [00.59.18]\nCurrent: [no caption]\nCorrect: like 10% niacinamide, 2% salicylic acid, hyaluronic acid\n------------------------------------------\n#9 [01.06.24]\nCurrent: Its utterly confusing\nCorrect: It's utterly confusing\n------------------------------------------\n#10 [01.22.06]\nCurrent: potent solution\nCorrect: [remove] / match audio\n------------------------------------------\n#11 [01.48.09]\nCurrent: 53000+\nCorrect: 53,000+\n------------------------------------------"
+      ],
+      "widgets_values_named": {
+        "text_0": "#1 [00.01.00]\nCurrent: 4 thing to shrink your pore to size '0'\nCorrect: 4 things to shrink your pores to size '0'\n------------------------------------------\n#2 [00.11.21]\nCurrent: [no caption]\nCorrect: Number 1, gentle but round-the-clock\n------------------------------------------\n#3 [00.22.09]\nCurrent: [no caption]\nCorrect: Number 2, excess oil regulation.\n------------------------------------------\n#4 [00.30.27]\nCurrent: [no caption]\nCorrect: Number 3, improving skin barrier\n------------------------------------------\n#5 [00.37.27]\nCurrent: but balances skin\nCorrect: but balanced skin\n------------------------------------------\n#6 [00.41.21]\nCurrent: pore looking tight.\nCorrect: pores looking tight.\n------------------------------------------\n#7 [00.43.15]\nCurrent: [no caption]\nCorrect: number 4, strengthening collagen.\n------------------------------------------\n#8 [00.59.18]\nCurrent: [no caption]\nCorrect: like 10% niacinamide, 2% salicylic acid, hyaluronic acid\n------------------------------------------\n#9 [01.06.24]\nCurrent: Its utterly confusing\nCorrect: It's utterly confusing\n------------------------------------------\n#10 [01.22.06]\nCurrent: potent solution\nCorrect: [remove] / match audio\n------------------------------------------\n#11 [01.48.09]\nCurrent: 53000+\nCorrect: 53,000+\n------------------------------------------"
+      }
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      1,
+      2,
+      0,
+      "STRING"
+    ],
+    [
+      2,
+      3,
+      2,
+      4,
+      0,
+      "STRING"
+    ],
+    [
+      3,
+      2,
+      1,
+      4,
+      2,
+      "STRING"
+    ],
+    [
+      6,
+      4,
+      1,
+      8,
+      0,
+      "STRING"
+    ],
+    [
+      7,
+      8,
+      0,
+      9,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.402016882978647,
+      "offset": [
+        -3507.019486827882,
+        -543.2509673142356
+      ]
+    },
+    "frontendVersion": "1.52.7",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
